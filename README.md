@@ -1,6 +1,6 @@
 
 # Spring-Boot-3-desenvolva-uma-API-Rest-em-Java.
-Este repositorio foi criado para manter o código do curso, o qual foi feito na plataforma da Alura.
+Este repositorio foi criado para manter o código do curso, o qual foi feito na plataforma da Alura. O curso objetivou-se na criação de uma api rest-full para um crud simples.
 
 
 
