@@ -28,3 +28,9 @@ O seguinte quadro Kanban foi seguido para desenvolvimento da api https://trello.
     Utilizado para otimização de codigo, esta dependência cria alguns metodos padrões como get`s e set´s otimizando a escrita do código.
 * ## spring-boot-devtools
     Utilizado para fazer o restart da apicação automaticamente.
+    
+* ## spring-security
+    Utilizado para controle de autenticação nas requisições.
+    
+* ## java-jwt (auth0)
+    Utilizado para trabalhar com JWT.
