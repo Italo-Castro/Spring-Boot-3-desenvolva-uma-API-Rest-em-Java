@@ -1,45 +1,51 @@
-package med.voll.api.paciente;
+package med.voll.api.domain.medico;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import med.voll.api.endereco.Endereco;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpServerErrorException;
+import med.voll.api.domain.endereco.Endereco;
 
-@Table(name = "pacientes")
-@Entity(name = "Paciente")
+@Table(name = "medicos")
+@Entity(name = "Medico")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Paciente {
+public class Medico {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String email;
+
     private String telefone;
-    private String cpf;
-    private Boolean ativo = true;
-    @Embedded
+
+    private String crm;
+    @Enumerated
+    private Especialidade especialidade;
+    @Embedded // recurso de embedded -> indic que no bd os campos do enderço estarão na mesma tabela..
     private Endereco endereco;
 
-    public Paciente(DadosCadastroPaciete dados) {
+    private Boolean ativo = true;
+
+    public Medico(DadosCadastroMedico dados) {
         this.nome = dados.nome();
-        this.cpf = dados.cpf();
         this.email = dados.email();
-        this.telefone = dados.telefone();
+        this.crm = dados.crm();
         this.endereco = new Endereco(dados.endereco());
+        this.especialidade = dados.especialidade();
+        this.telefone = dados.telefone();
         this.ativo = true;
     }
 
-    public void atualizarInfxormacoes(DadosAtualizarPaciente dados) {
+    public void atualizarInformacoes(DadosAtualizarMedico dados) {
         if (dados.nome() != null) {
             this.nome = dados.nome();
         }
+
         if (dados.telefone() != null) {
             this.telefone = dados.telefone();
         }
@@ -48,13 +54,6 @@ public class Paciente {
             this.endereco.atualizarInformacoes(dados.endereco());
         }
 
-        if (dados.cpf() != null) {
-            throw new HttpServerErrorException(HttpStatus.NOT_ACCEPTABLE);
-        }
-
-        if (dados.email() != null) {
-            throw new HttpServerErrorException(HttpStatus.NOT_ACCEPTABLE);
-        }
     }
 
     public void excluir() {
