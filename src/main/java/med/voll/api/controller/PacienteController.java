@@ -1,5 +1,6 @@
 package med.voll.api.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import med.voll.api.domain.paciente.DadosListagemPaciente;
 import med.voll.api.domain.paciente.Paciente;
 import med.voll.api.domain.paciente.PacienteRepository;
@@ -16,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("pacientes")
+@SecurityRequirement(name = "bearer-key") // indica que todos os metodos precisam de autenticação ... Isso para o openapi
 public class PacienteController {
 
     @Autowired
@@ -23,6 +25,7 @@ public class PacienteController {
 
     @PostMapping
     @Transactional
+
     public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroPaciete dados, UriComponentsBuilder uri) {
         var paciente = new Paciente(dados);
         repository.save(paciente);
